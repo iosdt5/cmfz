@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baizhi.gjc.dao.UserDao">
+    <select id="queryUserByTime" resultType="Integer">
+        select count(*) from user where sex = #{sex} and DATE_SUB(NOW(),INTERVAL #{day} day) &lt; rigest_date
+    </select>
+
+    <select id="map" resultType="com.baizhi.gjc.entity.UserMapDTO">
+        select location name, count(*) value from user where sex = #{sex} group by location
+    </select>
+
+    <select id="userlogin" resultType="com.baizhi.gjc.entity.User">
+        select * from user where phone = #{phone} and password =#{password} group by location
+    </select>
+
+    <select id="queryFriend" resultType="com.baizhi.gjc.entity.User">
+    SELECT id,phone,password,salt,status,photo,name,nick_name nickName,sex,sign,location,rigest_date rigestDate,
+        last_login lastLogin FROM user  where id !=#{id} AND `status`='1' ORDER BY rigest_date LIMIT 0,5
+</select>
+</mapper>
